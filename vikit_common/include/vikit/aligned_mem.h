@@ -16,6 +16,7 @@
 #include <string.h>     // memset
 #include <cassert>
 #include <cstdlib>
+#include <malloc.h>
 
 namespace vk {
 namespace aligned_mem {
@@ -64,7 +65,8 @@ namespace aligned_mem {
 
   inline void * aligned_alloc(size_t count, size_t alignment){
     void * mem = NULL;
-    assert(posix_memalign(&mem, alignment, count) == 0);
+    mem = memalign(alignment, count);
+    assert(mem != NULL);
     return mem;
   }
 
