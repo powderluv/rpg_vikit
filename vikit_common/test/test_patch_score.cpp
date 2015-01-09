@@ -97,7 +97,11 @@ void testZMSSD(cv::Mat& img)
 
 int main(int argc, char **argv)
 {
-  std::string img_name("test/data/scene_000.png");
+#ifdef ANDROID
+  std::string img_name("/data/local/share/vikit_test_data/scene_000.png");
+#else
+  std::string img_name("/home/equilibrium/src/rpg_vikit/vikit_common/test/data/scene_000.png");
+#endif
   cv::Mat img(cv::imread(img_name, 0));
   assert(!img.empty());
 
