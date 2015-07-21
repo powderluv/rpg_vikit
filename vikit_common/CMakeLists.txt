@@ -60,7 +60,7 @@ LIST(APPEND SOURCEFILES src/atan_camera.cpp
                         src/img_align.cpp)
 
 # Create vikit library
-ADD_LIBRARY(${PROJECT_NAME} SHARED ${SOURCEFILES})
+ADD_LIBRARY(${PROJECT_NAME} STATIC ${SOURCEFILES})
 TARGET_LINK_LIBRARIES(${PROJECT_NAME}
   ${OpenCV_LIBS}
   ${Sophus_LIBRARIES}
@@ -71,6 +71,7 @@ IF(USE_ROS)
 ENDIF()
 
 # Tests
+IF(NOT ANDROID)
 ADD_EXECUTABLE(test_vk_common_camera test/test_camera.cpp)
 TARGET_LINK_LIBRARIES(test_vk_common_camera ${PROJECT_NAME})
 
@@ -79,6 +80,7 @@ TARGET_LINK_LIBRARIES(test_vk_common_triangulation ${PROJECT_NAME})
 
 ADD_EXECUTABLE(test_vk_common_patch_score test/test_patch_score.cpp)
 TARGET_LINK_LIBRARIES(test_vk_common_patch_score ${PROJECT_NAME})
+ENDIF()
 
 
 ################################################################################
