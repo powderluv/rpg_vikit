@@ -16,7 +16,9 @@
 #include <string.h>     // memset
 #include <cassert>
 #include <cstdlib>
+#ifdef ANDROID
 #include <malloc.h>
+#endif
 
 namespace vk {
 namespace aligned_mem {
@@ -65,8 +67,12 @@ namespace aligned_mem {
 
   inline void * aligned_alloc(size_t count, size_t alignment){
     void * mem = NULL;
+#ifdef ANDROID
     mem = memalign(alignment, count);
     assert(mem != NULL);
+#else
+    assert(posix_memalign(&mem, alignment, count) == 0);
+#endif
     return mem;
   }
 
